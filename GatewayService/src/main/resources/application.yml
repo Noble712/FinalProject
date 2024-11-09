@@ -1,0 +1,40 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: GatewayService
+  cloud:
+    gateway:
+      routes:
+        - id: proveedor-service
+          uri: http://localhost:8094
+          predicates:
+            - Path=/proveedores/**
+        - id: cliente-service
+          uri: http://localhost:8095
+          predicates:
+            - Path=/clientes/**
+        - id: factura-service
+          uri: http://localhost:8096
+          predicates:
+            - Path=/facturas/**
+        - id: empleado-service
+          uri: http://localhost:8097
+          predicates:
+            - Path=/empleados/**
+        - id: producto-service
+          uri: http://localhost:8098
+          predicates:
+            - Path=/productos/**
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
